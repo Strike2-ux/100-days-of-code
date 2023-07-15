@@ -1,16 +1,10 @@
-def newPrint(color, word):
-  if color=="rojo":
-    print("\033[31m", word, sep="", end="")
-  elif color=="verde":
-    print("\033[32m", word, sep="", end="")
-  elif color=="azul":
-    print("\033[34m", word, sep="", end="")
-  else:
-    print("\033[0m", word, sep="", end="")
-
-print("Super Subroutine")
-print("With my ", end="")
-newPrint("rojo", "new program")
-newPrint("reset", " I can just call rojo('and') ")
-newPrint("rojo", "it will print in rojo ")
-newPrint("azul", "or even blue")
+print("30 Days Down - What did you think?")
+print()
+for i in range(1, 31):
+  # very important promt (digest and take it 1 day more of study)
+  thought = input(f"Day {i}:\n")
+  print()
+  myText = f"You thought Day {i} was"
+  print(f"{myText:^35}")
+  print(f"{thought:^35}")
+  print()
