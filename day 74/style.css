@@ -1,0 +1,34 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(60, 60, 60);
+  color: whitesmoke;
+}
+
+h1,
+h2 {
+  font-family: monospace;
+  font-weight: extra-bold;
+  font-size: 30px;
+}
+
+h2 {
+  font-size: 22px;
+}
+
+p {
+  font-size: 12px;
+  font-family: sans-serif;
+  background-color: black;
+  padding: 20px;
+}
+
+img {
+  background-color: black;
+  padding: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
