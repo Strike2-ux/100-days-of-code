@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Bakery</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='styles/style.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Welcome to My Bakery</h1>
+
+    <form method="post" action="/robot">
+      <p>Are you made of metal? <input type="radio" name="metal" value="Yes"> Yes </p><input type="radio" name="metal" value="No">No</p>
+
+      <p>What is infinity + 1<input type="text" name="infinty" required></p>
+      
+
+
+
+       <p> Which is your favorite food? <select name="food">
+          <option value="human food">Human food</option>
+          <option value="syntethic oil">Syntethic Oil</option>
+        </select>
+      </p>
+
+      <button type="submit">I am not a robot</button>
+
+    </form>
+  </body>
+</html>
