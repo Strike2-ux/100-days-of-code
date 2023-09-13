@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {% block content %} {% if logged_in %}
+<h1>Welcome to your blog</h1>
+<a href="/logout">Logout</a><br />
+<form action="/add_post" method="post">
+  <input type="text" name="title" placeholder="Enter post title" /><br />
+  <textarea name="content" placeholder="Write your post"></textarea><br />
+  <input type="submit" value="Submit" />
+</form>
+{% else %}
+<h1>Welcome to the blog</h1>
+<a href="/login">Login</a><br />
+{{ post_list|safe }} {% endif %} {% endblock %}
