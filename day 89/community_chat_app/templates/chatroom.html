@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Room</title>
+  </head>
+  <body>
+    <h1>Welcome to the Chat Room, {{ user_profile['username'] }}</h1>
+
+    <div id="messages">
+      {% for message in messages %}
+      <div class="message">
+        <img
+          src="{{ url_for('static', filename='images/' + message.profile_pic) }}"
+          alt="Profile Pic"
+        />
+        <p>{{ message.username }}: {{ message.text }}</p>
+        {% if is_admin and message.username != current_user %}
+        <a href="/delete_message/{{ message.id }}">Delete</a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+
+    <form method="post" action="/send_message" id="message-form">
+      <input
+        type="text"
+        name="message"
+        id="new-message"
+        placeholder="Type your message..."
+        required
+      />
+      <input type="submit" value="Send" />
+    </form>
+
+    {% if is_admin %}
+    <button id="admin-button">Admin</button>
+    {% endif %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+      var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+      socket.on('message', function(data) {
+          var messageElement = document.createElement('div');
+          messageElement.classList.add('message');
+          messageElement.innerHTML = '<img src="' + data.profile_pic + '" alt="Profile Pic"><p>' + data.username + ': ' + data.message + '</p>';
+          document.getElementById('messages').appendChild(messageElement);
+      });
+
+      document.addEventListener('DOMContentLoaded', function() {
+          document.getElementById('message-form').addEventListener('submit', function(e) {
+              e.preventDefault();
+              const message = document.getElementById('new-message').value;
+              document.getElementById('new-message').value = '';
+
+              socket.emit('message', { message: message });
+          });
+
+          const isAdmin = {% if is_admin %}true{% else %}false{% endif %};
+          if (isAdmin) {
+              document.getElementById('admin-button').addEventListener('click', function() {
+                  const messages = document.getElementsByClassName('message');
+                  for (const message of messages) {
+                      const deleteButton = message.querySelector('.delete-button');
+                      if (deleteButton) {
+                          deleteButton.style.display = 'block';
+                      }
+                  }
+              });
+
+              document.addEventListener('click', function(e) {
+                  if (e.target && e.target.classList.contains('delete-button')) {
+                      const messageID = e.target.getAttribute('data-message-id');
+                      fetch(`/delete_message/${messageID}`);
+                      e.target.parentElement.remove();
+                  }
+              });
+          }
+      });
+    </script>
+  </body>
+</html>
