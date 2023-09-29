@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Song Search</title>
+  </head>
+  <body>
+    <h1>Song Search</h1>
+
+    <form action="/">
+      <input type="text" name="year" placeholder="Enter a year" />
+      <input type="submit" value="Go" />
+    </form>
+
+    <ul>
+      {% for song in songs %}
+      <li>
+        {{ song.title }} - {{ song.artist }} {{ embedded_mp3_players[loop.index]
+        }}
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% if offset > 0 %}
+    <a href="{{ url_for('next') }}">Next</a>
+    {% endif %}
+  </body>
+</html>
